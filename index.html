@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catholic Brothers for Christ — Special Announcement Night</title>
+<meta name="description" content="Join Catholic Brothers for Christ for a Special Announcement Night on October 8 — the reveal of our upcoming Spring Conference's speakers and location.">
+
+<!-- ===================================================================
+  EDIT-ME QUICK REFERENCE
+  1. RSVP FORM: Uses FormSubmit (https://formsubmit.co) — no signup needed.
+     It's already pointed at normaduane@gmail.com. The very first
+     submission ever sent triggers a one-time "Activate Form" email to
+     that inbox — click "Activate Form" in it once, and every RSVP after
+     that arrives normally. Submit the form yourself once, right after
+     publishing, so activation doesn't eat a real guest's first RSVP.
+     To send RSVPs to a different address, search for "normaduane@gmail.com"
+     in the script below and swap it in the FORMSUBMIT_ENDPOINT line.
+  2. REGISTER BUTTON (ExSpiritus tab): links directly to your live RegFox
+     registration page. Update the href on the "register-btn" link if
+     that URL ever changes.
+=================================================================== -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --burgundy: #6c1f2b;
+    --burgundy-deep: #4a141d;
+    --gold: #c69a55;
+    --gold-light: #e6cd9a;
+    --parchment: #f6f1e6;
+    --parchment-card: #fffdf7;
+    --ink: #2b2420;
+    --ink-soft: #6b5f54;
+    --line: #e3d7c2;
+    --shadow: 0 24px 60px -30px rgba(45, 20, 15, 0.45);
+
+    --font-head: 'Cinzel', Georgia, serif;
+    --font-desc: 'EB Garamond', Georgia, serif;
+    --font-body: 'Barlow', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--parchment);
+    background-image:
+      radial-gradient(circle at 15% 10%, rgba(198,154,85,0.10), transparent 40%),
+      radial-gradient(circle at 85% 90%, rgba(108,31,43,0.08), transparent 45%);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .display{ font-family: var(--font-head); letter-spacing: 0.01em; }
+  .desc{ font-family: var(--font-desc); }
+
+  a{ color: var(--burgundy); }
+
+  .wrap{
+    max-width: 760px;
+    margin: 0 auto;
+    padding: clamp(20px, 4vw, 48px) 20px 64px;
+  }
+
+  /* ---------- Emblem ---------- */
+  .logo-row{
+    display:flex;
+    justify-content:center;
+    margin-bottom: 26px;
+  }
+  .logo-row img{
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+  }
+
+  /* ---------- Masthead ---------- */
+  .masthead{
+    text-align:center;
+    margin-bottom: 30px;
+  }
+  .title{
+    font-size: clamp(34px, 6vw, 52px);
+    font-weight: 700;
+    margin: 0 0 8px;
+    color: var(--burgundy-deep);
+    line-height: 1.08;
+  }
+  .subtitle{
+    font-size: clamp(17px, 2.4vw, 20px);
+    color: var(--ink-soft);
+    margin: 0;
+    font-style: italic;
+    font-family: var(--font-desc);
+  }
+
+  /* ---------- Card / tabs ---------- */
+  .card{
+    background: var(--parchment-card);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .tabs{
+    display:flex;
+    background: var(--burgundy-deep);
+  }
+  .tab{
+    flex:1;
+    padding: 16px 10px;
+    text-align:center;
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.6);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 13.5px;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: color .2s ease, border-color .2s ease, background .2s ease;
+  }
+  .tab:hover{ color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.04); }
+  .tab[aria-selected="true"]{
+    color: #fff;
+    border-bottom-color: var(--gold);
+    background: rgba(255,255,255,0.06);
+  }
+  .tab:focus-visible{ outline: 2px solid var(--gold-light); outline-offset: -2px; }
+
+  .panel{ display:none; padding: clamp(26px, 5vw, 44px); }
+  .panel.active{ display:block; }
+
+  /* ---------- Event panel ---------- */
+  .date-block{
+    display:flex;
+    align-items:center;
+    gap: 22px;
+    padding-bottom: 22px;
+    margin-bottom: 22px;
+    border-bottom: 1px solid var(--line);
+  }
+  .date-tile{
+    flex: 0 0 auto;
+    width: 84px;
+    text-align:center;
+    border: 1.5px solid var(--gold);
+    border-radius: 4px;
+    padding: 10px 4px 12px;
+    background: linear-gradient(180deg, rgba(198,154,85,0.10), transparent 60%);
+  }
+  .date-tile .mon{
+    display:block;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+    color: var(--burgundy);
+  }
+  .date-tile .day{
+    display:block;
+    font-family: var(--font-head);
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--burgundy-deep);
+    margin-top: 2px;
+  }
+  .date-tile .yr{
+    display:block;
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+  .date-copy .headline{
+    font-family: var(--font-head);
+    font-size: clamp(20px, 3vw, 24px);
+    font-weight: 600;
+    color: var(--burgundy-deep);
+    margin: 0 0 6px;
+  }
+  .date-copy .time{
+    margin: 0;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  .lede{
+    font-family: var(--font-desc);
+    font-size: 19px;
+    margin: 0 0 22px;
+  }
+  .lede strong{ color: var(--burgundy-deep); }
+
+  .details-list{
+    list-style:none;
+    margin: 0 0 26px;
+    padding: 0;
+    display:grid;
+    gap: 14px;
+  }
+  .details-list li{
+    display:flex;
+    gap: 12px;
+    align-items:flex-start;
+    font-size: 15px;
+  }
+  .details-list .ico{
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    color: var(--gold);
+  }
+  .details-list a{ color: var(--burgundy); text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: 3px; }
+
+  .refreshment-note{
+    font-family: var(--font-desc);
+    font-style: italic;
+    font-size: 19px;
+    color: var(--burgundy-deep);
+    text-align:center;
+    padding: 14px 10px;
+    margin: 0 0 30px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* ---------- Form ---------- */
+  .form-heading{
+    font-family: var(--font-head);
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--burgundy-deep);
+    margin: 0 0 4px;
+  }
+  .form-sub{
+    margin: 0 0 20px;
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+  .field-row{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  @media (max-width: 480px){ .field-row{ grid-template-columns: 1fr; } }
+
+  label{
+    display:block;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+  input[type="text"], input[type="email"], input[type="tel"]{
+    width:100%;
+    padding: 11px 13px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    background: #fff;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--ink);
+  }
+  input:focus{ outline: none; border-color: var(--burgundy); box-shadow: 0 0 0 3px rgba(108,31,43,0.10); }
+  .full{ margin-bottom: 18px; }
+
+  .submit-btn{
+    width:100%;
+    padding: 14px 20px;
+    background: var(--burgundy);
+    color:#fff;
+    border:none;
+    border-radius: 3px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    cursor:pointer;
+    transition: background .2s ease, transform .1s ease;
+  }
+  .submit-btn:hover{ background: var(--burgundy-deep); }
+  .submit-btn:active{ transform: translateY(1px); }
+  .submit-btn:disabled{ opacity: 0.65; cursor: default; }
+
+  .alt-rsvp{
+    text-align:center;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin-top: 16px;
+  }
+
+  .form-msg{
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-radius: 3px;
+    font-size: 14px;
+    display:none;
+  }
+  .form-msg.show{ display:block; }
+  .form-msg.ok{ background: #eaf3ea; color:#2b5a33; border: 1px solid #bfe0c3; }
+  .form-msg.err{ background: #fbeceb; color:#8c2c26; border: 1px solid #f1c3bf; }
+
+  /* ---------- About panel ---------- */
+  .about h2, .conf h2{
+    font-family: var(--font-head);
+    font-size: 25px;
+    color: var(--burgundy-deep);
+    margin: 0 0 14px;
+  }
+  .about h3, .conf h3{
+    font-family: var(--font-head);
+    font-size: 19px;
+    color: var(--burgundy-deep);
+    margin: 28px 0 10px;
+  }
+  .about p, .conf p{ margin: 0 0 16px; font-size: 18px; font-family: var(--font-desc); }
+
+  .learn-more-btn{
+    display: inline-block;
+    padding: 10px 20px;
+    border: 1.5px solid var(--burgundy);
+    color: var(--burgundy);
+    border-radius: 3px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    margin: 2px 0 26px;
+    transition: background .2s ease, color .2s ease;
+  }
+  .learn-more-btn:hover{ background: var(--burgundy); color: #fff; }
+
+  .photo{
+    margin: 0 0 26px;
+  }
+  .photo img{
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 3px;
+    border: 1px solid var(--line);
+  }
+
+  .speakers{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin: 0 0 20px;
+  }
+  @media (max-width: 480px){ .speakers{ grid-template-columns: 1fr; } }
+  .speaker-card{
+    margin: 0;
+    text-align: center;
+  }
+  .speaker-card img{
+    width: 108px;
+    height: 108px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--gold);
+    display: block;
+    margin: 0 auto 10px;
+  }
+  .speaker-card figcaption{
+    font-family: var(--font-head);
+    font-size: 15.5px;
+    color: var(--burgundy-deep);
+  }
+
+  .scripture{
+    margin: 0 0 24px;
+    padding: 18px 22px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    font-family: var(--font-desc);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--burgundy-deep);
+  }
+  .scripture cite{
+    display: block;
+    margin-top: 8px;
+    font-style: normal;
+    font-family: var(--font-body);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- ExSpiritus panel ---------- */
+  .conf-badge{
+    display:inline-block;
+    padding: 5px 12px;
+    background: var(--burgundy-deep);
+    color: var(--gold-light);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  .conf-name{
+    font-family: var(--font-head);
+    font-size: clamp(28px, 4vw, 34px);
+    color: var(--burgundy-deep);
+    margin: 0 0 6px;
+  }
+  .conf-date{
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin: 0 0 6px;
+    font-size: 15px;
+  }
+  .conf-theme{
+    font-family: var(--font-desc);
+    font-style: italic;
+    font-size: 19px;
+    color: var(--burgundy-deep);
+    margin: 0 0 22px;
+  }
+  .register-btn{
+    display:inline-block;
+    width:100%;
+    text-align:center;
+    padding: 15px 20px;
+    background: var(--gold);
+    color: var(--burgundy-deep);
+    border: none;
+    border-radius: 3px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 15.5px;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 6px;
+    transition: background .2s ease;
+  }
+  .register-btn:hover{ background: var(--gold-light); }
+  .register-note{
+    text-align:center;
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 10px;
+  }
+
+  footer{
+    text-align:center;
+    margin-top: 34px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="logo-row">
+    <img src="logo.svg" alt="Catholic Brothers for Christ">
+  </div>
+
+  <div class="masthead">
+    <h1 class="title display">You're Invited to<br>a Special Announcement Night</h1>
+    <p class="subtitle">An evening for our founders and top donors</p>
+  </div>
+
+  <div class="card">
+    <div class="tabs" role="tablist" aria-label="Invitation sections">
+      <button class="tab" role="tab" id="tab-event" aria-controls="panel-event" aria-selected="true">Event &amp; RSVP</button>
+      <button class="tab" role="tab" id="tab-about" aria-controls="panel-about" aria-selected="false">About Us</button>
+      <button class="tab" role="tab" id="tab-conf" aria-controls="panel-conf" aria-selected="false">ExSpiritus</button>
+    </div>
+
+    <!-- ===================== EVENT & RSVP ===================== -->
+    <section class="panel active" id="panel-event" role="tabpanel" aria-labelledby="tab-event">
+
+      <div class="date-block">
+        <div class="date-tile">
+          <span class="mon">OCT</span>
+          <span class="day">8</span>
+          <span class="yr">2026</span>
+        </div>
+        <div class="date-copy">
+          <p class="headline display">Thursday Evening</p>
+          <p class="time">6:30 PM – 8:00 PM</p>
+        </div>
+      </div>
+
+      <p class="lede">
+        Join us and be the very first to hear our incredible speaker lineup
+        and discover the location for our upcoming <strong>Spring Conference</strong>.
+        You won't want to miss this announcement!
+      </p>
+
+      <figure class="photo">
+        <img src="photos/assembly.jpg" alt="Catholic Brothers for Christ members seated together at a past conference gathering.">
+      </figure>
+
+      <ul class="details-list">
+        <li>
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.1-7-11.4A7 7 0 0 1 12 2a7 7 0 0 1 7 7.6C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.6" r="2.4"/></svg>
+          <span>
+            <strong>Catholic Brothers for Christ Headquarters</strong><br>
+            <a href="https://www.google.com/maps/search/323+W+Northwest+Highway+%0D%0A+Grapevine,+Tx+76051?entry=gmail&source=g" target="_blank" rel="noopener">
+              323 W Northwest Highway, Grapevine, TX 76051
+            </a>
+          </span>
+        </li>
+        <li>
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg>
+          <span>6:30 PM – 8:00 PM</span>
+        </li>
+        <li>
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h16v16H4z" opacity="0"/><path d="M21 8V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2m18 0-9 6-9-6m18 0v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8"/></svg>
+          <span>RSVP: <a href="#rsvp-form">fill out the form below</a></span>
+        </li>
+        <li>
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.1-1.1a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2z"/></svg>
+          <span>Questions: <a href="tel:8175273157">817.527.3157</a></span>
+        </li>
+      </ul>
+
+      <p class="refreshment-note display">Hors d'oeuvres and refreshments will be served with the big announcement.</p>
+
+      <h2 class="form-heading">Reserve Your Seat</h2>
+      <p class="form-sub">Kindly RSVP below — we're so glad you can be among the first to know.</p>
+
+      <form id="rsvp-form" novalidate>
+        <div class="field-row">
+          <div>
+            <label for="first-name">First name</label>
+            <input type="text" id="first-name" name="first_name" required autocomplete="given-name">
+          </div>
+          <div>
+            <label for="last-name">Last name</label>
+            <input type="text" id="last-name" name="last_name" required autocomplete="family-name">
+          </div>
+        </div>
+        <div class="full">
+          <label for="email">Email address</label>
+          <input type="email" id="email" name="email" required autocomplete="email">
+        </div>
+        <div class="full">
+          <label for="phone">Phone number</label>
+          <input type="tel" id="phone" name="phone" required autocomplete="tel">
+        </div>
+        <button type="submit" class="submit-btn" id="submit-btn">RSVP for October 8th</button>
+        <div class="form-msg" id="form-msg" role="status"></div>
+      </form>
+
+      <p class="alt-rsvp">
+        Having trouble with the form? RSVP to <a href="mailto:normaduane@gmail.com">normaduane@gmail.com</a>
+        or call <a href="tel:8175273157">817.527.3157</a>.
+      </p>
+    </section>
+
+    <!-- ===================== ABOUT US ===================== -->
+    <section class="panel" id="panel-about" role="tabpanel" aria-labelledby="tab-about">
+      <div class="about">
+        <h2>About Catholic Brothers for Christ</h2>
+        <p>
+          We are a group of men, of various ages and places in life, who are deeply
+          committed to having a relationship with Jesus Christ and sharing the Gospel
+          through the witness of lively brotherhood rooted in prayer, the Sacraments,
+          mentorship, and service.
+        </p>
+        <a class="learn-more-btn" href="https://www.catholicbrothersforchrist.com/" target="_blank" rel="noopener">Learn More About Us</a>
+
+        <figure class="photo">
+          <img src="photos/brotherhood.jpg" alt="Two Catholic Brothers for Christ members smiling together at a conference, wearing name badges and lanyards.">
+        </figure>
+
+        <h3>Our Mission</h3>
+        <p>
+          To inspire and empower men to fully embrace Christ's purpose for their
+          lives through wholehearted prayer, authentic brotherhood, and intentional
+          acts of service.
+        </p>
+
+        <figure class="photo">
+          <img src="photos/prayer.jpg" alt="A man's clasped hands in prayer, wearing a Catholic Brothers for Christ lanyard.">
+        </figure>
+
+        <h3>Our Vision</h3>
+        <p>
+          A brotherhood of spirited and courageous missionary disciples, united in
+          faith, striving to cultivate a Christ-centered culture throughout North
+          Texas.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== EXSPIRITUS ===================== -->
+    <section class="panel" id="panel-conf" role="tabpanel" aria-labelledby="tab-conf">
+      <div class="conf">
+        <span class="conf-badge">BROTHERS BESIDE OUR PRIEST</span>
+        <h2 class="conf-name">ExSpiritus</h2>
+        <p class="conf-date">October 24, 2026 · Springlake Event Center, Knights of Columbus Hall</p>
+        <p class="conf-theme">United with Our Priests in the Sacred Heart of Jesus</p>
+
+        <figure class="photo">
+          <img src="photos/adoration.jpg" alt="An altar set for Eucharistic Adoration, with a monstrance surrounded by candles and flowers.">
+        </figure>
+
+        <blockquote class="scripture">
+          "Rivers of Living Waters," Jesus said, "If anyone thirsts, let him come to me and drink."
+          <cite>John 7:37&ndash;39</cite>
+        </blockquote>
+
+        <h3>Featuring</h3>
+        <div class="speakers">
+          <figure class="speaker-card">
+            <img src="photos/speaker-kevin.jpg" alt="Kevin Wells, ExSpiritus speaker">
+            <figcaption>Kevin Wells</figcaption>
+          </figure>
+          <figure class="speaker-card">
+            <img src="photos/speaker-frzack.jpg" alt="Fr. Zack Burns, TOR, ExSpiritus speaker">
+            <figcaption>Fr. Zack Burns, TOR</figcaption>
+          </figure>
+        </div>
+
+        <p>
+          Join us for an evening of worship, teaching, and fellowship as we unite
+          with our priests in the Sacred Heart of Jesus.
+        </p>
+
+        <a class="register-btn" id="register-btn" href="https://catholicbrothersforchrist.regfox.com/exspiritus-brothers-beside-our-priest" target="_blank" rel="noopener">Register for ExSpiritus</a>
+        <p class="register-note">Registration is open now — secure your spot below.</p>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    Catholic Brothers for Christ · 323 W Northwest Highway, Grapevine, TX 76051
+  </footer>
+</div>
+
+<script>
+  // ---------------- Tabs ----------------
+  const tabs = document.querySelectorAll('.tab');
+  const panels = {
+    'tab-event': document.getElementById('panel-event'),
+    'tab-about': document.getElementById('panel-about'),
+    'tab-conf': document.getElementById('panel-conf'),
+  };
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => activateTab(tab.id));
+  });
+  function activateTab(id){
+    tabs.forEach(t => t.setAttribute('aria-selected', t.id === id ? 'true' : 'false'));
+    Object.entries(panels).forEach(([tabId, panel]) => {
+      panel.classList.toggle('active', tabId === id);
+    });
+    if (id === 'tab-event') {
+      window.scrollTo({ top: document.querySelector('.card').offsetTop - 20, behavior: 'smooth' });
+    }
+  }
+
+  // ---------------- Register button (ExSpiritus tab) ----------------
+  // The register button is now a plain link to the live RegFox registration
+  // page, so no click handler is needed — update the href in the HTML above
+  // if the registration link ever changes.
+
+  // ---------------- RSVP form ----------------
+  // Uses FormSubmit (https://formsubmit.co) — no signup required. The first
+  // submission ever sent to this address triggers a one-time "Activate Form"
+  // email; click that link once and every submission after it lands
+  // straight in the inbox. Test the form yourself first so a real guest's
+  // RSVP isn't the one that gets "used up" on activation.
+  const FORMSUBMIT_ENDPOINT = "https://formsubmit.co/ajax/normaduane@gmail.com";
+
+  const form = document.getElementById('rsvp-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const msg = document.getElementById('form-msg');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    msg.className = 'form-msg';
+    const data = {
+      first_name: document.getElementById('first-name').value.trim(),
+      last_name: document.getElementById('last-name').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      phone: document.getElementById('phone').value.trim(),
+      _subject: 'RSVP: Catholic Brothers for Christ — Oct 8 Announcement Night',
+      _captcha: 'false',
+    };
+
+    if (!data.first_name || !data.last_name || !data.email || !data.phone) {
+      msg.textContent = 'Please fill in every field so we can confirm your RSVP.';
+      msg.classList.add('err', 'show');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+
+    try {
+      const res = await fetch(FORMSUBMIT_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      if (res.ok) {
+        msg.textContent = "You're all set! We can't wait to celebrate with you on October 8th.";
+        msg.classList.add('ok', 'show');
+        form.reset();
+      } else {
+        throw new Error('Submission failed');
+      }
+    } catch (err) {
+      msg.textContent = "Something went wrong sending your RSVP. Please email normaduane@gmail.com or call 817.527.3157 directly.";
+      msg.classList.add('err', 'show');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'RSVP for October 8th';
+    }
+  });
+</script>
+
+</body>
+</html>
